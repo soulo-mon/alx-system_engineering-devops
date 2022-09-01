@@ -1,0 +1,4 @@
+#!/bin/bash
+mv [[:upper:]]* /tmp/u
+
+echo mv README.md /tmp/u
