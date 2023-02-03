@@ -1,8 +1,17 @@
-#!/usr/bin/env bash
-# Displays all acive IPv4 addresses on the machine.
+#!/bin/bash
 
-# a different way using ifconfig but now ip is a new command and ifconfig can be missing in some os
-#ifconfig | grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*" | awk '{print $2}'
+# Get all network interfaces
+interfaces=$(ifconfig | grep -o '^\w*')
 
-ip -4 -o addr show | awk '{print $4}' | cut -d "/" -f 1
+# Loop through interfaces
+for interface in $interfaces
+do
+  # Get IP address for each interface
+  ip=$(ifconfig $interface | grep 'inet ' | awk '{print $2}')
+
+  # Only display IPv4 IPs
+  if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+    echo $ip
+  fi
+done
 
