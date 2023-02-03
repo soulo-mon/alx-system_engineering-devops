@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # backup original hosts file
 cp /etc/hosts /etc/hosts.bak
 
